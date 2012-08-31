@@ -1,0 +1,6 @@
+<<-END_SEE_OTHER_PAGE
+<form action="/pages/arithmetic" method="post">
+  <input name="expression">
+  <input type="submit" value="=">
+</form>
+END_SEE_OTHER_PAGE

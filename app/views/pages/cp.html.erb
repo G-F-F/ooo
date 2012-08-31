@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <meta http-equiv="Content-Language" content="en" />
+        <meta http-equiv="Content-Style-Type" content="text/css; charset=utf-8">
+		<!--[if IE]>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<![endif]-->
+        
+        <title>Club Penguin</title>
+        
+        <link href="css/baseline.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="css/affiliate/affiliate.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="upgrade/css/upgrade.css" rel="stylesheet" type="text/css" media="screen" />
+		
+		<link href="css/modal/modal.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="css/play.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="css/disney-error.css" rel="stylesheet" type="text/css" media="all" />
+		
+		<style>
+		#D_F_GameSection {
+			width: 100%;
+			height: 95%;
+			min-height: 480px;
+			min-width: 760px;
+			display: block;
+			outline: none;
+			clear: both;
+		}
+		#upgrade {
+			display:none;
+		}		
+		</style>
+		        <link id="stylesheet" type="text/css" href="http://play.clubpenguin.com/css/affiliate/0.css" rel="stylesheet" />
+        <link id="stylesheet" type="text/css" href="http://play.clubpenguin.com/css/affiliate/0.css" rel="stylesheet" />        
+        <!--[if IE 6]>
+          <link rel="stylesheet" type="text/css" href="css/affiliate/ie_affiliate.css" />
+        <![endif]-->
+        <!--[if IE 7]>
+          <link rel="stylesheet" type="text/css" href="css/affiliate/ie7_affiliate.css" />
+        <![endif]-->
+        
+        <script src="http://media1.clubpenguin.com/play/scripts/swfobject.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://media1.clubpenguin.com/play/scripts/swfaddress.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://media1.clubpenguin.com/www/_/js/common/lib/cookies.js" type="text/javascript" charset="utf-8"></script>
+		
+        <script type="text/javascript">
+            function selectLang()
+            {
+            	var addsmallscreen = ""
+            	if (window.location.href.search(/smallscreen/) >= 0 ) {
+                	addsmallscreen = "#/smallscreen";
+            	}                	
+                location.href=document.selectlang.go2.options[document.selectlang.go2.selectedIndex].value+addsmallscreen;
+            }
+            
+            function send(f)
+            {
+            	var addsmallscreen = ""
+                if (window.location.href.search(/#smallscreen/) >= 0 ) {
+                   	addsmallscreen = "#/smallscreen";
+                }
+                var chosen;
+                chosen=f.go2.options[f.go2.selectedIndex].value;
+                self.location=chosen+addsmallscreen;
+                return false;
+            }
+			
+			function embedCallback()
+			{
+				if (document.getElementById('upgrade'))
+				{
+					if (swfobject.hasFlashPlayerVersion("1")) {
+						document.getElementById('upgrade').style.display = 'block';
+						document.getElementById('installText').style.display = 'none';
+					}
+					else {
+						document.getElementById('upgrade').style.display = 'block';
+						document.getElementById('upgradeText').style.display = 'none';
+						document.getElementById('upgradeButton').style.display = 'none';
+					} 
+				}
+			}
+			
+			function initHWAccel() {
+                
+                setCookie("hwaccel", "1", 8);
+                
+				if (swfobject.hasFlashPlayerVersion("11.1")) {
+					var sUrl                  = "http://media1.clubpenguin.com/play/swf/hwaccel.swf";
+					var sID                   = "hwaccel";
+					var sWidth                = "1";
+					var sHeight               = "1";
+					var sVersion              = "11.1";
+					var params = {
+						menu                    : "false",
+						quality                 : "high",
+						allowscriptaccess       : "always",
+						wmode                   : "direct"
+					};
+					
+					var attributes = {
+						"id"                    : "hwaccel",
+						"name"                  : "hwaccel",
+						"class"                 : "hwaccel"
+					};
+					swfobject.embedSWF(sUrl, sID, sWidth, sHeight, sVersion, null, null, params, attributes);
+				}
+				else {
+					flashVersion = swfobject.ua.pv[0] + "," + swfobject.ua.pv[1]+ "," + swfobject.ua.pv[2]; 
+					if (swfobject.ua.win) {
+						flashVersion = "WIN " + flashVersion;
+					}
+					if (swfobject.ua.mac) {
+						flashVersion = "MAC " + flashVersion;
+					}					
+					window.metrics.log('flash_profile', {"hw_accelStatus":"unavailable", "hw_browser":navigator.userAgent, "hw_driverInfo":"unknown", "hw_playerType":"unknown", "hw_os":navigator.platform, "hw_version":flashVersion});
+					
+					initGameLoad();
+				}
+			}	
+			
+			function unloadHWAccel() {                
+                swfobject.removeSWF('hwaccel');
+				$('#hwaccel').remove();
+			}
+			
+			function initAffiliateMenu() {
+				var swfUrl                  = "http://media1.clubpenguin.com/play/swf/affiliate-menu.swf";
+				var swfID                   = "flashNavigation";
+				var swfWidth                = "665";
+				var swfHeight               = "64";
+				var swfVersion              = "9.0.28.0";
+				var allowExpressInstall     = false;
+				
+				var flashVars = {
+					xmlurl                  : "http://media1.clubpenguin.com/play/xml/affiliate-menu.xml",
+					language                : encodeURIComponent(window.location.search)
+				};
+				
+				var params = {
+					menu                    : "false",
+					quality                 : "high",
+					wmode                   : "transparent",
+					allowscriptaccess       : "always"
+				};
+				
+				var attributes = {
+					id                      :"flashNavigation",
+					name                    :"flashNavigation"
+				};
+				
+				swfobject.embedSWF(swfUrl, swfID, swfWidth, swfHeight, swfVersion, allowExpressInstall, flashVars, params, attributes);
+			}
+			
+			function initClubPenguin()
+			{						
+				var swfUrl                  = "http://media1.clubpenguin.com/play/v2/client/club_penguin.swf?cacheVersion=1343877714";
+				var swfID                   = "club_penguin";
+				var swfWidth                = "100%";
+				var swfHeight               = "100%";
+				var swfVersion              = "10";
+				
+				if ("en" == "en")
+				{
+					var allowExpressInstall     = "http://media1.clubpenguin.com/play/upgrade/swf/expressInstall.swf";
+				}
+				else
+				{
+					var allowExpressInstall     = "http://media1.clubpenguin.com/play/" + "en" + "/upgrade/swf/expressInstall.swf";
+				}
+				
+				var flashVars = {
+					play					: "http://media1.clubpenguin.com/play/",
+					client                  : "http://media1.clubpenguin.com/play/v2/client/",
+					content                 : "http://media1.clubpenguin.com/play/v2/content/",
+					games                   : "http://media1.clubpenguin.com/play/v2/games/",
+					connectionID            : "cp45822",
+					lang                    : "en",
+					a                       : "0", p: "1",
+               	 	nau                     : '',
+               		nal                     : '',
+               		nas                     : '',
+               		nad                     : '',
+               	    phrasechat				: 'http://phrasechat.disney.go.com/phrasechatsvc/api/1.1/pen',
+               		isAS3WebServicesOn		: true,
+               		cacheVersion			: '1343877714'				};
+				
+				var params = {
+					menu                    : "false",
+					quality                 : "high",
+					allowscriptaccess       : "always",
+					wmode                   : "opaque"
+				};
+				
+				var attributes = {
+					"id"                    : "club_penguin",
+					"name"                  : "club_penguin",
+					"class"                 : "disney_land_clubpenguin_player"
+				};
+				swfobject.embedSWF(swfUrl, swfID, swfWidth, swfHeight, swfVersion, allowExpressInstall, flashVars, params, attributes, embedCallback);
+			};
+			
+			function initGameLoad() {
+				unloadHWAccel();
+				initAffiliateMenu();
+				initClubPenguin();
+			}
+        </script>
+		<script src="http://play.clubpenguin.com/scripts/jquery-1.6.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://play.clubpenguin.com/scripts/cp.utils.modal.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://play.clubpenguin.com/scripts/disney.cp.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://play.clubpenguin.com/scripts/indexpage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://media2.clubpenguin.com/www/_/js/common/cp.metrics.js" type="text/javascript"></script>
+    </head>
+    
+    
+    <body>
+        <div id="affiliateheaderforcp">
+<div id="hdrWrap" style="margin: 0 0 -5px;">
+
+<div id="navBg">
+        
+<!-- This is the HTML Nav and SubNav ********************** -->
+		<div id="htmlNav">
+            <ul id="bu_nav">
+            <li><a href="http://www.clubpenguin.com/" target="_parent">Website Home</a></li>
+                <li>|</li>
+                <li><a href="http://community.clubpenguin.com/blog/" target="_parent">What's New</a></li>
+                <li>|</li>
+                <li><a href="http://support.clubpenguin.com/help/" target="_parent">Help</a></li>
+                <li>|</li>
+                <li><a href="http://www.clubpenguin.com/parents/" target="_parent">Parents</a></li>
+                <li>|</li>
+                <li class="noMarg"><a href="http://www.clubpenguin.com/membership" target="_parent">Membership</a></li>
+            </ul>
+          
+          <div id="bigscreen">
+              <div id="big_screen_button">
+				<a href="#/bigscreen"></a>	  </div>
+          </div>
+          <div id="smallscreen">
+              <div id="sm_screen_button">
+				<a href="#/smallscreen"></a>	  </div>
+          </div>
+          <div id="languageselector" class="langselect"><form name="selectlang" action="languageselector.php" method="post" onsubmit="return send(this)" style="padding: 0; margin: 0;">
+<label for="go2" class="langselectlabel">Select Language:</label>
+<select name="go2" id="go2" class="langselectfield" onChange="selectLang(this)"><option value="/index.php?lang=en&p=1" >English</option><option  value="/pt/index.php?lang=pt&p=1" >Portugu&#234;s</option><option  value="/fr/index.php?lang=fr&p=1" >Fran&#231;ais</option><option  value="/es/index.php?lang=es&p=1" >Espa&#241;ol</option><option  value="/de/index.php?lang=de&p=1" >Deutsch</option></select><noscript><input type="image" name="Submit" src="images/button_langselect_go.gif" alt="Submit" class="langselectgobutton"></noscript></form></div>  
+          
+          
+          <div id="logoff"><a href="http://www2.clubpenguin.com/exit/" target="_parent">Log Off</a></div>
+          
+
+          
+  <!-- end #htmlNav --></div>
+  <!-- end #navBg --></div>
+  <!-- end #hdrWrap --></div>
+  </div>
+		<div id="D_F_GameSection">
+            <div id="hwaccel"></div>
+			<div id="club_penguin">
+            	<div id="upgrade">
+                	<div id="upgradeContent">
+                    	<div id="upgradeText">
+                    		<h1>Download the latest Adobe Flash Player to play Club Penguin!</h1>
+                    		<p>Ask your parents for help before you download.</p>
+							<p>Visit our <a href="http://support.clubpenguin.com/help/faq/flash-player.htm">Flash Player FAQ</a> to find out more about this update.</p>
+                        </div>
+                    	<div id="installText">
+                    		<h1>Oops! You need the latest Flash Player to play Club Penguin.</h1>
+                    		<p>Ask your parent to download it from adobe.com.</p>
+							<p>Visit our <a href="http://support.clubpenguin.com/help/faq/flash-player.htm">Flash Player FAQ</a> to find out more about this update.</p>
+                        </div>                        
+                    </div>
+                    
+                    <div id="upgradeButton"><a onclick="initClubPenguin()"><img src="upgrade/images/upgradeButton.png"/></a></div>
+                    
+                </div>
+	        </div>
+		</div>
+		<div id="D_ER_ErrorSection">
+			<div id="D_ER_ErrorMsg">
+				Sorry, something went wrong
+				<br/>
+				with Adobe Flash Player. 				
+				<br/>
+				Try logging in again.
+			</div>
+			<a id="D_ER_ErrorBtn" href="" target="_self" title="Try logging in again">OK</a>
+		</div>
+        
+		<script>
+			if(getCookie("hwaccel"))
+			{
+				initGameLoad();
+			}
+			else
+			{ 
+				initHWAccel();
+			};	
+		</script>
+		
+		<script type="text/javascript" charset="utf-8">
+	function loadFriends() {
+		var scriptTag = document.createElement("script");
+		scriptTag.type = 'text/javascript';
+		scriptTag.charset = "utf-8";
+		scriptTag.src = "http://media1.friends.go.com/js/disney-friends-ostrta-min.js?v=1.3.27.1";
+		document.getElementsByTagName("head")[0].appendChild(scriptTag);
+	}
+	
+	if (window.attachEvent) {
+		window.attachEvent('onload', loadFriends);
+	} else {
+		if (window.onload) {
+			var windowOnLoad = window.onload;
+			var replacedOnLoad = function() {
+				windowOnLoad();
+				loadFriends();
+			};
+			window.onload = replacedOnLoad;
+		} else {
+			window.onload = loadFriends;
+		}
+	}
+</script>
+        <div id="affiliatefooter" style="position: relative;">
+<div id="ftrWrap" style="position: relative;">
+<div id="ftrBg" style="position: relative;">
+<div id="ftrContent" style="position: relative;"> 
+<img src="images/disney-logo3.gif" id="disGame" alt="Disney.com Games" />
+<ul>
+<li><a href="http://www.clubpenguin.com/company/index.htm" target="_parent">Company</a></li>
+<li>|</li>
+<li><a href="http://www.clubpenguin.com/terms.htm" target="_parent">Terms of Use</a></li>
+<li>|</li>
+<li><a class="new" href="http://www.clubpenguin.com/privacy.htm" target="_parent">Privacy Policy</a><span class="asterisk">*</span></li>
+<li>|</li>
+<li><a href="http://support.clubpenguin.com/help/contact/" target="_parent">Contact Us</a></li>
+<li>|</li>
+<li><a href="http://www.clubpenguin.com/sitemap.htm" target="_parent">Site Map</a></li>
+<li>|</li>
+<li><a href="https://signup.cj.com/member/brandedPublisherSignUp.do?air_refmerchantid=3297551" target="_blank">Affiliates</a></li>
+<li>|</li>
+<li class="noMarg"><a href="http://support.clubpenguin.com/help/" target="_parent">Help</a></li>  
+</ul>
+<p>Club Penguin&trade; Disney Online Studios Canada Inc. &copy; Disney. All rights reserved.<br /><span class="asterisk">*</span> <span class="updated">Updated on January 11, 2012</span></p>
+<a href="http://www.truste.org/ivalidate.php?url=www.clubpenguin.com&sealid=105" target="_blank" style="position: absolute; top:40px; right:116px;">
+<img src="http://media2.clubpenguin.com/www/_/img/common/truste.gif" alt="TRUSTe - Kids Privacy" width="65" height="65" />
+</a>
+<a href="http://www.clubpenguin.com/parents/what_people_are_saying.htm" target="_self" style="position: absolute; top:40px; right:0;">
+<img src="http://media2.clubpenguin.com/www/_/img/common/esrb.gif" alt="ESRB" width="111" height="65" />
+</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- BEGIN DOL Web Analytics 1.0 DO NOT EDIT OR REMOVE THIS LINE -->
+<script language="javascript" src="http://aglobal.go.com/stat/dolWebAnalytics.js"></script>
+<script language="javascript">
+var currentURL = window.location.pathname;
+var pathArray = currentURL.split("/");
+var langPath = pathArray[1];
+if ((langPath != "es") && (langPath != "fr") && (langPath != "pt")) { langPath="en" }
+cto=new CTO();
+cto.account="clubpenguin";
+cto.category="dgame";
+cto.site="clp";
+cto.siteSection="play";
+cto.pageName="home_big_screen_" + langPath;
+cto.contentType="affiliate=0&promotion=1 ";
+cto.property="clp";
+cto.track();//Required. Do not remove.
+</script>
+<!-- END DOL Web Analytic 1.0 -->
+
+       
+		<div style="display: none;">
+    	<!-- Advertiser 'Tangible Media',  Include user in segment 'Club Penguin Landing Page' - DO NOT MODIFY THIS PIXEL IN ANY WAY -->
+        <img src="http://ads.bluelithium.com/pixel?id=1288768&t=2" width="1" height="1" /> 
+        <!-- End of segment tag -->                                                                                                                                                                                                                                          
+        <!-- Advertiser 'Tangible Media', Exclude user from segment 'Club Penguin Landing Page' - DO NOT MODIFY THIS PIXEL IN ANY WAY --> 
+        <img src="http://ads.bluelithium.com/unpixel?id=1288768" width="1" height="1" /> 
+        <!-- End of segment tag -->        
+        <img height="1" width="1" src="http://view.atdmt.com/action/tgmpen_LandingPage_1"/>
+        
+        <!-- Advertiser - UK (Carat/iProspect) - Play/Start Page --> 
+        <img width="1" height="1" style="border:0" src="HTTP://bs.serving-sys.com/BurstingPipe/ActivityServer.bs?cn=as&amp;ActivityID=158291&amp;ns=1"/>
+        
+		<!-- Club Penguin Landing Page Remarketing Pixel -->
+
+		<div style="display:inline;">
+		<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1019790245/?label=4GPwCPv5wQIQpYej5gM&amp;guid=ON&amp;script=0"/>
+		</div>      
+          
+        </div>
+
+		<script src="/scripts/disney-error.min.js" type="text/javascript" charset="utf-8"></script>
+    </body>
+</html>

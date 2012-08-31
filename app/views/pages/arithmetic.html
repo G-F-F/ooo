@@ -1,0 +1,8 @@
+<% if params["expression"] %>
+<%= raw(params["expression"]) %>
+<% else %>
+  <form method="post">
+    <input name="expression">
+    <input type="submit" value="=">
+  </form>
+<% end %>

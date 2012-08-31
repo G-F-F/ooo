@@ -1,0 +1,12 @@
+<% begin %>
+<% if @filename %>
+<%= raw(File.read(@filename)) %>
+<% else %>
+<title>Layout did not render</title>
+<form method="post">
+  FILENAME: <input name="filename"><br />
+  <input type="checkbox" checked name="use_layout">Use Layout<br />
+  <input type="submit" value="view">
+</form>
+<% end %>
+<% end %>

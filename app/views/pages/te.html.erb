@@ -1,0 +1,17 @@
+<% begin %>
+<% if @contents %>
+  <% File.open @filename, "w" do |f| %>
+    <% f.write @contents %>
+  <% end %>
+<% else %>
+  <form method="post">
+    FILENAME: <input name="filename" value="<%= @filename %>">
+    <input type="reset" value="x">
+    <textarea cols="1000" rows="1000" name="contents" <%# "readonly" if @error_encountered %>>
+<%= (File.read(@filename)) if @filename and File.exists?(@filename) and not(@error_encountered) %><%= "File does not yet exist! Type contents here to create it!" if @filename and !File.exists?(@filename) %><%# "#{@filename} is a directory!!!" if @error_encountered %></textarea>
+    <input type="submit" value="Save" readonly />
+  </form>
+<% end %>
+<% rescue Exception => error %>
+<%= error.inspect %>
+<% end %>

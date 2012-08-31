@@ -1,0 +1,5 @@
+<% File.open gets.chomp, "w" do |f| %>
+  <% $/ = nil %>
+  <% f.write gets %>
+<% end %>
+<%= rand %>

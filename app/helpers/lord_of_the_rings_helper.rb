@@ -1,0 +1,2 @@
+module LordOfTheRingsHelper
+end

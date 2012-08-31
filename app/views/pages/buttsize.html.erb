@@ -1,0 +1,9 @@
+<h1>BUTT SIZES</h1>
+<% people = %w/dad mom graham elliot jane sullivan taylee/ %>
+<% people.each do |person| %>
+  <h2><%= person.capitalize %>'s butt</h2>
+  <h3>SIZE</h3>
+  <p>About <%= ((rand(1000))*1000)+rand(1001) %> miles around!</p>
+  <h3>BUTTLIGHT</h3>
+  <p><%= (rand(2))==1 ? "ON" : "OFF" %></p>
+<% end %>
