@@ -1,7 +1,12 @@
+require "faker"
 class PagesController < ApplicationController
   
   def home
     @title = "Home"
+    if signed_in?
+      @micropost = Micropost.new
+      @feed_items = current_user.feed.paginate(:page => params[:page])
+    end
   end
   
   def contact
@@ -25,12 +30,19 @@ class PagesController < ApplicationController
   
   def te
     @title = "Text Editor"
+    if Rails.env.production?
+      @title = "Page Protected by #{Faker::Name.name}"
+      flash[:notice] = Faker::Lorem.sentence(1000)
+      render "pages/buttsize"
+    end
     @filename = params["filename"]
     @contents = params["contents"]
   end
   
   def brainiacs
-    @download = true
+    @title = Faker::Lorem.sentence(1000)
+    flash[:notice] = "Welcome to Ooo! Ooo is a U-TYPE site! But before you start typing, you need to download this site! Go to http://marchhare.finlayson-fife.org/Ooo/ to download! Here, you may browse the files to your heart's content! For more info ask #{Faker::Name.name}." if Rails.env.demo?
+    $params = params
   end
   
   def trade
@@ -61,6 +73,27 @@ class PagesController < ApplicationController
   end
 
   def arithmetic
-    @expression = params["expression"]
+    if Rails.env.production?
+      @title = "Page Protected by #{Faker::Name.name}"
+      flash[:notice] = Faker::Lorem.sentence(1000)
+      render "pages/buttsize"
+    else
+      @title = "Web Arithmetic Page"
+      @expression = params["expression"]
+    end
+  end
+  
+  def filebrowser
+    @title = "File Browser"
+    @dir = params["dir"]
+  end
+  
+  def execute_sh
+    @filename = params["filename"]
+  end
+  
+  def css
+    @download = true
+    @css = true
   end
 end

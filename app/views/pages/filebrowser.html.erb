@@ -1,0 +1,10 @@
+<% begin %>
+  <% @dir ||= "." %>
+  <% Dir.entries(@dir).sort.each do |file| %>
+    <form method="post"><input type="hidden" name="dir" value="<%= @dir %>/<%= file %>"><input type="submit" value="<%= file %>"></form><br />
+  <% end %>
+<% rescue Exception %>
+  <pre class="file">
+<%= File.read(@dir) %>
+  </pre>
+<% end %>

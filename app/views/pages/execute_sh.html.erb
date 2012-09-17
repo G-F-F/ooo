@@ -1,0 +1,9 @@
+<pre class="file">
+<%= `#{File.read(@filename)}` if @filename %>
+</pre>
+<% unless @filename %>
+  <form method="post">
+    <input name="filename">
+    <input type="submit" value="RUN">
+  </form>
+<% end %>

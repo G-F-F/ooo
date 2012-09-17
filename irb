@@ -1,0 +1,3 @@
+require "irb" # gets "irb"
+IRB.start # starts it
+"How did you like IRB?" # asks how the user liked it

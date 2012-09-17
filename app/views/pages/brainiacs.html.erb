@@ -15,7 +15,8 @@
   <% th = "th" %>
 <% end %>
 <% th = "th" if (n.split(""))[-2] == "1" %>
-<% e = Notifier.tell("graham@finlayson-fife.org").deliver %>
+<% e = Notifier.tell("graham@finlayson-fife.org").deliver if Rails.env.development? %><%# <-- [WHAT DOES THIS DO?] %>
+<% e = "???" unless Rails.env.development? %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -143,7 +144,7 @@ if (AC_FL_RunContent == 0) {
 
 Part of Family Education Network | <a class="privacy" href="http://fen.com/resources/privacyStatement.html" target="_blank">PRIVACY POLICY</A>* <!--<span class="copyright" style="font-size:10px;">(Updated 00.00.10)</span>--> | <a class="terms" href="/about/terms-of-use.html" target="_blank">Terms of Use</a>* <span class="copyright" style="font-size:10px;padding-left:10px;">* updated 05/12</span>
 
-
+<%= logo if Rails.env.development? %>
 
 </div>
 

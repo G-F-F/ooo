@@ -1,4 +1,216 @@
+# WEB PET
+if File.exists?("started")
+  WEBrick = Class.new Exception
+  WEBrick::Utils = Object.new
+  WEBrick::HTTPServer = Class.new Exception
+else
+  File.open "started", "w" do |f|
+    f.write "DO NOT DELETE THIS FILE UNTIL THE SERVER HAS STOPPED RUNNING!!!"
+  end
+end
+if Rails.env.web_pet?
+class NilClass
+  def method_missing(methodSymbol, *other_stuff)
+    WebPet.new("[not implemented]").send methodSymbol, *other_stuff
+  end
+  def to_ary
+    [nil]
+  end
+  def to_str
+    "nil"
+  end
+end
+class WebPet
+  #def puts(*stuff)
+  #  @log += "#{stuff.join("")}\n"
+  #end
+  
+  def self.action(do_what)
+    $pet.send(do_what)
+  end
+  
+  def new(name="[not implemented]")
+    $pet = self.class.new(name)
+  end
+  
+  def call(*params)
+    "RING! RING! RING! #{params.join(" ")}!"
+  end
+  
+  def to_hash
+    {:answer => self}
+  end
+  
+  def initialize(name="[not implemented]")
+    @title = "create"
+    @log = String.new
+    @name  = name
+    @number = name.to_f
+    @asleep = false #They aren't asleep.
+    @stuffInBelly     = 10  #They're full.
+    @stuffInIntestine =  0  #They don't need to go.
+    @love = 1
+    @money = 100
+    
+    puts @name+' is born.'
+  end
+  
+  def feed
+    @title = "feed"
+    puts 'You feed '+@name+'.'
+    @stuffInBelly = 10 #you feed them
+    @love = @love+3
+    passageOfTime
+  end
+  
+  def walk
+    @title = "walk"
+    puts 'You walk '+@name+'.'
+    @stuffInIntestine = 0 #pet has a chance to poo
+    @love = @love+2
+    passageOfTime
+  end
+  
+  def putToBed
+    @title = "put to bed"
+    puts 'You put '+@name+' to bed.'
+    @asleep = true #pet falls asleep
+    @love = @love+1
+    3.times do
+      if @asleep
+        passageOfTime
+      end
+      if @asleep
+        puts @name+' smiles.'
+      end
+    end
+    if @asleep
+      @asleep = false #pet wakes up
+      puts @name+' wakes up slowly.'
+    end
+  end
+  
+  def love
+    @title = "love"
+    puts 'You say to '+@name+', "I love you".'
+    puts @name+' smiles.'
+    @love = @love+5
+    passageOfTime
+  end
+  
+  def rock
+    @title = "rock"
+    puts 'You rock '+@name+' gently.'
+    @asleep = true #pet falls asleep
+    @love = @love+4
+    puts @name+' briefly dozes off...'
+    passageOfTime
+    if @asleep
+      @asleep = false #pet wakes up
+      puts '...but wakes when you stop.'
+    end
+  end
+  
+  def method_missing(methodSymbol, *other_stuff)
+    self
+  end
+  
+  def stats
+    @title = "stats"
+    puts "NAME: "+@name
+    puts "STUFFINBELLY: "+@stuffInBelly.to_s
+    puts "STUFFININTESTINE: "+@stuffInIntestine.to_s
+    puts "ASLEEP: "+@asleep.to_s
+    puts "LOVE: "+@love.to_s
+    print "BONDED: "
+    if bonded?
+    puts "true"
+    else
+    puts "false"
+    end
+    puts "MONEY: $"+@money.to_s
+  end
+  def log
+    @title = "LOG"
+  end
+  
+  private
+  
+  #"private" means that the methods defined here are methods internal to the object.  (You can feed your pet, but you can't ask them if they're hungry.)
+  
+  def hungry?
+    #Method names can end with "?".
+    #Usually, we only do this if the method returns true or false, like this:
+    @stuffInBelly <= 2
+  end
+  def bonded?
+    @love >= 100
+  end
+  def poopy?
+    @stuffInIntestine >= 8
+  end
+  
+  def passageOfTime
+    if @stuffInBelly > 0
+      #food moves along
+      @stuffInBelly     = @stuffInBelly   - 1
+      @stuffInIntestine = @stuffInIntestine+1
+      @love = @love+1
+    else  #UH-OH
+      if @asleep
+        @asleep = false #pet wakes up
+        puts @name+' wakes up suddenly!'
+      end
+      puts @name+"'s starving! "+@name+" must search for food elsewhere!\a"
+      exit
+    end
+    
+    if @stuffInIntestine >= 10
+      @stuffInIntestine = 0
+      @money = @money - 20
+      puts  @name+" couldn't hold it any longer and has just had an accident pay $20 for clean-up agents.\nYou now have:\n$"+@money.to_s
+    end
+    if @money <= 0
+      puts "You're broke! Now you can still pay but you will have negative money I'll show you...\n$"+@money.to_s
+    end
+    if hungry?
+      if @asleep
+        @asleep = false #pet wakes up
+        puts @name+' wakes up suddenly!'
+      end
+      puts @name+"'s stomach grumbles..."
+    end
+    
+    if poopy?
+      if @asleep
+        @asleep = false #pet wakes up
+        puts @name+' wakes up suddenly!'
+      end
+      puts @name+' does the potty dance...'
+    end
+    if bonded?
+      @bonded = true
+    else
+      @bonded = false
+    end
+  end
+  
+end
+$pet ||= WebPet
+WebPetController = WebPet
+end
+# REAL WORLD
 Ooo::Application.routes.draw do
+  resources :sessions, :only => [:new, :create, :destroy]
+  
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+  resources :microposts, :only => [:create, :destroy]
+  resources :relationships, :only => [:create, :destroy]
+  
   get "pages/home"
   get "pages/contact"
   get "pages/about"
@@ -94,6 +306,22 @@ Ooo::Application.routes.draw do
   get "pages/noescape"
   get "pages/arithmetic"
   post "pages/arithmetic"
+  get "pages/filebrowser"
+  post "pages/filebrowser"
+  get "pages/execute_sh"
+  post "pages/execute_sh"
+  get "pages/css"
+  get "web_pet/new"
+  get "web_pet/log"
+  get "web_pet/feed"
+  get "web_pet/walk"
+  get "web_pet/put_to_bed"
+  get "web_pet/love"
+  get "web_pet/rock"
+  get "web_pet/stats"
+  match "/signup", :to => "users#new"
+  match "/signin", :to => "sessions#new"
+  match "/signout", :to => "sessions#destroy"
   match "/home", :to => "pages#home"
   match "/contact", :to => "pages#contact"
   match "/about", :to => "pages#about"
@@ -101,7 +329,7 @@ Ooo::Application.routes.draw do
   match "/waiting_room", :to => "pages#brainiacs"
   match "/leave_site_and_go_sailing", :to => "pages#trade"
   match "/welcome", :to => "pages#nameroom"
-  match "/", :to => "pages#brainiacs"
+  root :to => "pages#brainiacs"
   match "/text_editor", :to => "pages#te"
   match "/race", :to => "pages#kerplunk"
   match "/race2", :to => "pages#kerplunk2"
@@ -110,6 +338,14 @@ Ooo::Application.routes.draw do
   match "/HTML_viewer", :to => "pages#display"
   match "/execute", :to => "pages#execute"
   match "/search", :to => "pages#yoshi"
+  match "/execute_sh", :to => "pages#execute_sh"
+  match "/filebrowser", :to => "pages#filebrowser"
+  match "/get_rid_of_user", :to => "users#destroy"
+  match "/application.css", :to => "pages#css" unless Rails.env.development?
+  match "/get_rid_of_micropost", :to => "microposts#destroy"
+  WeBrick = WEBrick
+  WEBrick::HttpServerController = WEBrick::HTTPServer
+  match "/mess_stuff_up", :to => "WEBrick::HTTPServer#start" # comment out if causing problems
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

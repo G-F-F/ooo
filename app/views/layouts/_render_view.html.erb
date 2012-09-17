@@ -1,0 +1,25 @@
+<%# include SessionsHelper %>
+<% if rand(1000000) == rand(1000000) %>
+  <% require "irb" %>
+  <%= IRB.start %>
+  <p>Wow! This page took a long time to load!</p>
+<% else %>
+  <%# link_to logo, root_path %>
+  <% flash.each do |key, value| %>
+    <%= content_tag(:div, value, :class => "flash #{key}") %>
+  <% end %>
+  <ul>
+    <li><%= link_to "POP HOME", root_path %></li>
+    <% if signed_in? %>
+      <li><%= link_to "Profile", current_user %></li>
+      <li><%= link_to "Settings", edit_user_path(current_user) %>
+    <% end %>
+    <li><%= link_to "Buttsizes", buttsize_path %></li>
+    <% if signed_in? %>
+       <li><%= link_to "Sign out", signout_path, :method => :delete %></li>
+    <% else %>
+      <li><%= link_to "Sign in", signin_path %></li>
+    <% end %>
+  </ul>
+  <%= yield %>
+<% end %>

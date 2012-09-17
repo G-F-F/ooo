@@ -33,7 +33,95 @@ p
   background-color: black;
   font-family: "Lucida Console";
 }
+
 body
 {
   background-image: "/Chin_in_Hand.jpg"
+}
+
+label
+{
+  color: #777777;
+  font-size: 100px;
+}
+
+.actions
+{
+  padding: 17px;
+}
+
+#error_explanation
+{
+  background-color: #777777;
+  padding: 30px;
+  font-family: "Helvetica";
+}
+
+.field_with_errors
+{
+  margin-top: 10px;
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+.field_with_errors label
+{
+  color: #fff;
+}
+
+.flash.success
+{
+  color: #7f7;
+}
+
+.flash.failure
+{
+  color: #f77;
+}
+
+.flash.error
+{
+  color: #fff;
+  background-color: red;
+}
+
+.flash.crazy
+{
+  color: #fff;
+  background-color: blue;
+  font-family: "webdings";
+}
+
+pre.file
+{
+  color: #555;
+  background-color: #FEFEFE;
+  font-family: "Lucida Console";
+  font-size: 10px;
+}
+
+pre.debug_dump
+{
+  color: #555;
+  background-color: #EFEFEF;
+  font-family: "Comic Sans MS";
+  font-size: 10px;
+}
+
+div.field input
+{
+  color: #555;
+  background-color: #EFEFEF;
+  font-family: "Arial Black";
+}
+
+.flash.notice
+{
+  background-color: #ff7;
+}
+
+a.visited_a_lot
+{
+  color: blue;
 }

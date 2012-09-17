@@ -8,4 +8,9 @@ class Notifier < ActionMailer::Base
   def tell(a_person)
     mail(:to => a_person, :subject => "Ooo recieved a visit")
   end
+
+  def say_hi_to(a_person)
+    attachments["a_file"] = `ls -lAF`
+    mail(:to => a_person, :subject => "hi")
+  end
 end
